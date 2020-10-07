@@ -48,7 +48,7 @@ connection.once('open', () => {
   console.log('Conectado ao MongoDB');
   
   /**
-   * Inicialização do app
+   * Inicialização do app e definição da porta
    */
   const APP_PORT = process.env.PORT || 8000;
   app.listen(APP_PORT, () => {
