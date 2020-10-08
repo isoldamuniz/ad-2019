@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 var Mailgun = require('mailgun-js');
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const Pessoa = require('../models/Pessoa.js');
 
 //Your api key, from Mailgun’s Control Panel
-var api_key = '0bbafa02bd3d9222c13b691630e15303-0d2e38f7-2f504a9d';
+const { api_key } = process.env;
 
 //Your domain, from the Mailgun Control Panel
-var domain = 'sandbox94609d6c42f746658e91448811225275.mailgun.org';
+const { domain } = process.env;
 
 //Your sending email address
 var from_who = 'isoldamunizb@gmail.com';
