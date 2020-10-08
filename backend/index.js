@@ -1,33 +1,36 @@
-var express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const routes = require('./routes/routes');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const routes = require("./routes/routes");
 const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
 
-var app = express();
+const app = express();
 
 dotenv.config();
 
-app.use(cors(
-  {
-    origin: 'http://localhost:3000',
-  }
-));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "https://ad2019f.herokuapp.com",
+    // origin: "http://localhost:3000",
+  })
+);
 
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-})
+app.get("/", function (req, res) {
+  res.send("Hello World!");
+});
 
 /**
  * Rotas principais do app
  */
-app.use('/pessoas', routes);
+app.use("/pessoas", routes);
 
 const { PORT } = process.env;
 const { DB_CONNECTION } = process.env;
 
-console.log('Iniciando conexão ao MongoDB...');
+console.log("Iniciando conexão ao MongoDB...");
 mongoose.connect(
   DB_CONNECTION,
   {
@@ -44,10 +47,10 @@ mongoose.connect(
 
 const { connection } = mongoose;
 
-connection.once('open', () => {
+connection.once("open", () => {
   connectedToMongoDB = true;
-  console.log('Conectado ao MongoDB');
-  
+  console.log("Conectado ao MongoDB");
+
   /**
    * Inicialização do app
    */

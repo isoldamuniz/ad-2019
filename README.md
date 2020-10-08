@@ -1,5 +1,5 @@
 To access the deployed version of this app access: 
-[http://localhost:3000](http://localhost:3000)
+[https://ad2019f.herokuapp.com/](https://ad2019f.herokuapp.com/)
 
 ## On backend folder:
 

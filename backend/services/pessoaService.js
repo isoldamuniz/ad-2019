@@ -16,7 +16,7 @@ const { domain } = process.env;
 var from_who = 'isoldamunizb@gmail.com';
 
 module.exports.sendMail = async () => {
-    //var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+    /*var mailgun = new Mailgun({apiKey: api_key, domain: domain});
     var data = {
         from: from_who,
         subject: 'Seu amigo secreto',
@@ -26,7 +26,7 @@ module.exports.sendMail = async () => {
         data.to = pessoa.email;
         data.html = `Olá, o seu amigo secreto é ${pessoa.amigo.nome}`;
     });
-    /*mailgun.messages().send(data, function (err, body) {
+    mailgun.messages().send(data, function (err, body) {
         if (err) {
             console.log("got an error: ", err);
         }
