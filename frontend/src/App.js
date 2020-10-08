@@ -9,6 +9,7 @@ import Title from './components/Title';
 import InsertButton from './components/InsertButton';
 import SorteioButton from './components/SorteioButton';
 import InsertForm from './components/InsertForm';
+import SorteioForm from './components/SorteioForm';
 import EditForm from './components/EditForm';
 
 export default function App() {
@@ -17,6 +18,8 @@ export default function App() {
   const [showFormFlag, setShowFormFlag] = useState(false);
   const [showEditFormFlag, setShowEditFormFlag] = useState(false);
   const [pessoaToEdit, setPessoaToEdit] = useState({});
+  const [showFormSorteioFlag, setShowFormSorteioFlag] = useState(false);
+  const [submitMsg, setSubmitMsg] = useState('');
 
   async function getPessoas(){
     return await api.pessoas();
@@ -28,6 +31,9 @@ export default function App() {
   const handleFormClose = () => {
     setShowFormFlag(false);
   }
+  const handleFormSorteioClose = () => {
+    setShowFormSorteioFlag(false);
+  }
   const handleOpenEditForm = (pessoa) => {
     setPessoaToEdit(pessoa);
     setShowEditFormFlag(true);
@@ -35,7 +41,9 @@ export default function App() {
   const handleEditFormClose = () => {
     setShowEditFormFlag(false);
   }
-  const realizarSorteio = () => {
+
+  const realizarSorteio = async () => {
+    setShowFormSorteioFlag(true);
 
     let pessoasShuffled = [];
 
@@ -53,7 +61,7 @@ export default function App() {
         array[m] = array[i];
         array[i] = t;
       }
-    
+      
       return array;
     }
 
@@ -75,8 +83,9 @@ export default function App() {
       
     rascunho.forEach(async (pessoa) => {
       setTimeout(async function(){ await api.update(pessoa._id, pessoa); }, 500);
-      await api.submit();
     });
+    await api.submit();
+    setSubmitMsg('Os amigos secretos foram enviados para os emails.');
 
   }
 
@@ -117,6 +126,7 @@ export default function App() {
             <td colSpan="3">
               {showEditFormFlag && <EditForm pessoa={pessoaToEdit} onSave={editPessoa} onClose={handleEditFormClose}/>}
               {showFormFlag && <InsertForm onSave={insertPessoa} onClose={handleFormClose}/>}
+              {showFormSorteioFlag && <SorteioForm onClose={handleFormSorteioClose} submitMsg={submitMsg}/>}
               <Grid fluid={true} toEdit={handleOpenEditForm} toDelete={deletePessoa} pessoas={pessoas.length!==0 ? pessoas : []}/>
             </td>
           </tr>
