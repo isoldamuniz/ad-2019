@@ -28,7 +28,6 @@ module.exports.sendMail = async () => {
     });
     mailgun.messages().send(data, function (err, body) {
         if (err) {
-            res.render('error', { error : err});
             console.log("got an error: ", err);
         }
         else {
