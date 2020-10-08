@@ -9,4 +9,4 @@ To access the deployed version of this app access:
 ## On frontend folder:
 
 1. run 'yarn install' to install all the required dependencies
-2. run 'yarn start' to start the server
+2. run 'yarn dev' to start the server
