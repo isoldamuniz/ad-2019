@@ -84,11 +84,9 @@ export default function App() {
 
     setSorteio(rascunho);
 
-    // rascunho.forEach(async (pessoa) => {
-    //   const res = await api.update(pessoa._id, pessoa);
-    //   console.log(res);
-    //   console.log(JSON.parse(res.config.data));
-    // });
+    rascunho.forEach(async (pessoa) => {
+      const res = await api.update(pessoa._id, pessoa);
+    });
     // await api.submit();
     setSubmitMsg("Os amigos secretos foram enviados para os emails.");
   };
