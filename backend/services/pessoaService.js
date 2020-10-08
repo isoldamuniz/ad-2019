@@ -1,6 +1,38 @@
 const mongoose = require('mongoose');
+var Mailgun = require('mailgun-js');
 
 const Pessoa = require('../models/Pessoa.js');
+
+//Your api key, from Mailgun’s Control Panel
+var api_key = '0bbafa02bd3d9222c13b691630e15303-0d2e38f7-2f504a9d';
+
+//Your domain, from the Mailgun Control Panel
+var domain = 'sandbox94609d6c42f746658e91448811225275.mailgun.org';
+
+//Your sending email address
+var from_who = 'isoldamunizb@gmail.com';
+
+module.exports.sendMail = async () => {
+    var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+    var data = {
+        from: from_who,
+        subject: 'Seu amigo secreto',
+    }
+    const pessoas = await Pessoa.find({});
+    pessoas.forEach((pessoa) => {
+        data.to = pessoa.email;
+        data.html = `Olá, o seu amigo secreto é ${pessoa.amigo.nome}`;
+    });
+    mailgun.messages().send(data, function (err, body) {
+        if (err) {
+            res.render('error', { error : err});
+            console.log("got an error: ", err);
+        }
+        else {
+            console.log(body);
+        }
+    });
+};
 
 module.exports.findAll = async (_, res) => {
     try {
@@ -32,14 +64,15 @@ module.exports.update = async (req, res) => {
             message: 'Os dados de entrada estão vazios!',
         });
     }
-      
+
     const id = req.params.id;
-    const {nome, email} = req.body;
+    const {nome, email, amigo} = req.body;
     
     try {
         await Pessoa.findOneAndUpdate({ _id: id }, {
             nome: nome, 
-            email: email
+            email: email,
+            amigo: amigo,
         });
         res.send('Pessoa atualizada com sucesso');
     } catch (error) {

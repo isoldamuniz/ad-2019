@@ -16,9 +16,14 @@ const remove = (id) => {
   return http.delete(`/${id}`);
 };
 
+const submit = async () => {
+  return http.get(`/submit`);
+}
+
 export default {
   pessoas,
   register,
   update,
-  remove
+  remove,
+  submit
 };

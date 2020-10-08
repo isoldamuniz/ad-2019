@@ -10,4 +10,6 @@ router.put('/:id', service.update);
 
 router.delete('/:id', service.remove);
 
+router.get('/submit/', service.sendMail);
+
 module.exports = router;

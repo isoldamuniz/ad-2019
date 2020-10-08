@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+let subSchema = mongoose.Schema({
+  nome: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+});
+
 let schema = mongoose.Schema({
   nome: {
     type: String,
@@ -10,7 +21,7 @@ let schema = mongoose.Schema({
     required: true,
   },
   amigo: {
-    type: Number,
+    type: subSchema,
     required: false,
   },
 });

@@ -2,8 +2,11 @@ var express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const routes = require('./routes/routes');
+const dotenv = require("dotenv");
 
 var app = express();
+
+dotenv.config();
 
 app.use(cors(
   {
@@ -21,10 +24,8 @@ app.get('/', function (req, res) {
  */
 app.use('/pessoas', routes);
 
-/**
- * Conexão ao Banco de Dados
- */
-const DB_CONNECTION = "mongodb+srv://master:clust3r0@d1r3t0@cluster0.voto9.mongodb.net/amigosecreto?retryWrites=true&w=majority";
+const { PORT } = process.env;
+const { DB_CONNECTION } = process.env;
 
 console.log('Iniciando conexão ao MongoDB...');
 mongoose.connect(
@@ -48,10 +49,9 @@ connection.once('open', () => {
   console.log('Conectado ao MongoDB');
   
   /**
-   * Inicialização do app e definição da porta
+   * Inicialização do app
    */
-  const APP_PORT = process.env.PORT || 8000;
-  app.listen(APP_PORT, () => {
-    console.log(`Servidor iniciado na porta ${APP_PORT}`);
+  app.listen(PORT || 8000, () => {
+    console.log(`Servidor iniciado na porta ${PORT || 8000}`);
   });
 });

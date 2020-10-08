@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import validator from 'validator';
 
 Modal.setAppElement('#modal');
 
@@ -18,13 +19,21 @@ export default function EditForm({ pessoa, onSave, onClose}) {
     const handleEmailInput = (event) => {
         setEmail(event.target.value);
     }
+
     useEffect(() => {
-        if(nome!== '' && email!==''){
-            setDisableBtnFlag(false);
+        if(nome!=='' && email!==''){
+            if(validator.isEmail(email)){
+                setDisableBtnFlag(false);
+                setErrorMsg('');
+            } else{                
+                setDisableBtnFlag(true);
+                setErrorMsg('Digite um e-mail válido.');
+            }
         }else{
-            setDisableBtnFlag(true)
+            setDisableBtnFlag(true);
+            setErrorMsg('');
         }
-    }, [nome, email])
+    }, [nome, email, errorMsg]);
     
     const handleFormSubmit = (event) => {
         event.preventDefault();

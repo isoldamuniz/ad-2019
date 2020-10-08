@@ -58,10 +58,24 @@ export default function App() {
     }
 
     pessoasShuffled = shuffle(pessoas);
-    console.log(pessoasShuffled);
 
-    pessoasShuffled.forEach( pessoa => {
-      console.log(pessoa);
+    let rascunho = pessoasShuffled.map((pessoa, index)=>{
+      if(index === pessoasShuffled.length - 1 ){
+        return {
+          ...pessoa,
+          amigo: pessoasShuffled[0],
+        }
+      }else{
+        return{
+          ...pessoa,
+          amigo: pessoasShuffled[index+1],
+        }
+      }
+    });
+      
+    rascunho.forEach(async (pessoa) => {
+      setTimeout(async function(){ await api.update(pessoa._id, pessoa); }, 500);
+      await api.submit();
     });
 
   }
@@ -113,20 +127,3 @@ export default function App() {
     )
 }
 
-const styles = {
-  main:{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    border: '1px solid'
-  },
-  header:{
-    display: 'flex',
-    border:'1px solid',
-    width: '100%',
-    
-  },
-  button: {
-    marginRight: '10px',
-  }
-}
